@@ -14,6 +14,7 @@ public class Hangman{
             Console.WriteLine("\nENTER AN OPTION\n");
             while(true){
                 Console.WriteLine("\nIF YOU WANT TO START A GAME: START\n");
+                Console.WriteLine("IF YOU WANT TO SUGGEST WORDS: SUGGEST\n");
                 Console.WriteLine("IF YOU WANT TO EXIT: EXIT\n");
                 string input = Console.ReadLine() ?? "";
 
@@ -52,6 +53,10 @@ public class Hangman{
                     case "exit":
                         Console.WriteLine("\nGood bye!\n");
                         return;
+
+                    case "suggest":
+                        Game.suggestWords();
+                        break;
 
                     default:
                         Console.WriteLine("Wrong Option. Enter again\n");

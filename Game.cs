@@ -7,7 +7,6 @@ using System.Linq;
 
 public class Game{
 
-
     private static bool hasNonLetter(string word){
         foreach (char c in word){
             if (!char.IsLetter(c)){
@@ -48,7 +47,7 @@ public class Game{
         else{
             String filePath = mode + ".txt";
 
-            List<string> wordList = null;
+            List<string> wordList;
 
             if (File.Exists(filePath))
             {
@@ -201,9 +200,53 @@ public class Game{
         Console.WriteLine("Stats For Wrong Guesses:");
         foreach (var stat in stats)
         {
-            Console.WriteLine($"{stat.Letter}: {stat.Count}times wrong");
+            Console.WriteLine($"{stat.Letter}: {stat.Count} times wrong");
         }
     }
+
+    public static void suggestWords(){
+        Console.WriteLine("******* WORD SUGGESTION *******\n");
+        
+        while (true){
+            Console.WriteLine("\n-------------------------------\n");
+            Console.WriteLine("Enter Option:\n");
+            Console.WriteLine("If you want to suggest more words: CONTINUE\n");
+            Console.WriteLine("If you want to exit: EXIT\n");
+
+            string input = Console.ReadLine() ?? "";
+            switch(input.ToLower()){
+                case "continue":
+                    Console.WriteLine("Enter one word at a time without whitespaces\n");
+                    string suggest = Console.ReadLine() ?? "";
+                    if (hasNonLetter(suggest)){
+                        Console.WriteLine("The input contains non-alphabet character.\n");
+                        Console.WriteLine("Try again.\n");
+                    }else{
+                        clasifyWord(suggest.ToLower());
+                        Console.WriteLine("The word is added.\n");
+                    }
+                    break;
+
+                case "exit":
+                    Console.WriteLine("Thank you for your suggestions!\n");
+                    return;
+                
+                default:
+                    Console.WriteLine("Wrong Option. Enter again\n");
+                    break;
+            }
+        }
+    }
+    private static void clasifyWord(string word){
+        if (word.Length <= 4){
+            File.AppendAllText("easy.txt", $"{word}\n");
+        }else if (word.Length <= 8){
+            File.AppendAllText("intermediate.txt", $"{word}\n");
+        }else{
+            File.AppendAllText("hard.txt", $"{word}\n");
+        }
+    }
+
 
 
 }
