@@ -6,6 +6,9 @@ public class Game{
 
     public static void playGame(string mode){
 
+        if (mode.equals("multiplayer")){
+            Console.WriteLine("BRUH");
+        }
         String filePath = mode + ".txt";
 
         List<string> wordList = null;
