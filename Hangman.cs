@@ -9,10 +9,11 @@ using System.Collections.Generic;
 public class Hangman{
     
     static void Main(string[] args) {
+
         Console.WriteLine("*************HANG MAN*************\n");
-            Console.WriteLine("ENTER AN OPTION\n");
+            Console.WriteLine("\nENTER AN OPTION\n");
             while(true){
-                Console.WriteLine("IF YOU WANT TO START A GAME: START\n");
+                Console.WriteLine("\nIF YOU WANT TO START A GAME: START\n");
                 Console.WriteLine("IF YOU WANT TO EXIT: EXIT\n");
                 string input = Console.ReadLine() ?? "";
 
@@ -23,9 +24,12 @@ public class Hangman{
                         bool keepPlaying = true;
                         while (keepPlaying){
 
-                            PlayGame();
+                            string mode = askMode();
 
-                            Console.WriteLine("Do you want to play one more game?\n");
+                            Game.playGame(mode.ToLower());
+
+
+                            Console.WriteLine("\nDo you want to play one more game?\n");
                             Console.WriteLine("Enter y/n\n");
                             string newGame = Console.ReadLine() ?? "";
 
@@ -34,19 +38,19 @@ public class Hangman{
                                     break;
 
                                 case "n":
-                                    Console.WriteLine("Good bye!\n");
+                                    Console.WriteLine("\nGood bye!\n");
                                     keepPlaying = false;
                                     return;
                                 
                                 default:
-                                    Console.WriteLine("Wrong Option. Enter again\n");
+                                    Console.WriteLine("\nWrong Option. Enter again\n");
                                     break;
 
                             }
                         }
                         break;
                     case "exit":
-                        Console.WriteLine("Good bye!\n");
+                        Console.WriteLine("\nGood bye!\n");
                         return;
 
                     default:
@@ -57,128 +61,26 @@ public class Hangman{
         }
     }
 
-    static void PlayGame(){
-        string[] wordList = {"computer", "soccer", "pancake", "challenge", "butterfly"};
-        Random rand = new Random();
+    private static String askMode(){
+        while (true){
+            Console.WriteLine("\nChoose Mode:\n");
+            Console.WriteLine("Enter Easy / Intermediate / Hard\n");
+            string mode = Console.ReadLine() ?? "";
+            switch (mode.ToLower()){
+                case "easy":
+                    return "easy";
+                
+                case "intermediate":
+                    return "intermediate";
+                
+                case "hard":
+                    return "hard";
 
-        string word = wordList[rand.Next(wordList.Length)];
-        char[] guessed = new string('_', word.Length).ToCharArray();
-        HashSet<char> triedLetters = new HashSet<char>();
-        
-        int lives = 6;
-
-        string[] hangmanStages = new string[]
-        {
-@"
-  +---+
-  |   |
-      |
-      |
-      |
-      |
-=========",
-@"
-  +---+
-  |   |
-  O   |
-      |
-      |
-      |
-=========",
-@"
-  +---+
-  |   |
-  O   |
-  |   |
-      |
-      |
-=========",
-@"
-  +---+
-  |   |
-  O   |
- /|   |
-      |
-      |
-=========",
-@"
-  +---+
-  |   |
-  O   |
- /|\  |
-      |
-      |
-=========",
-@"
-  +---+
-  |   |
-  O   |
- /|\  |
- /    |
-      |
-=========",
-@"
-  +---+
-  |   |
-  O   |
- /|\  |
- / \  |
-      |
-========="
-        };
-
-        Console.WriteLine("\nNew Game Started!\n");
-
-        while (lives > 0 && new string(guessed) != word)
-        {
-            Console.WriteLine(hangmanStages[6-lives]);
-            Console.WriteLine($"Word: {new string(guessed)}");
-            Console.WriteLine($"Lives remaining: {lives}");
-            Console.WriteLine("Enter your guess (one letter):");
-
-            string input = Console.ReadLine() ?? "";
-            if (input.Length != 1 || !char.IsLetter(input[0]))
-            {
-                Console.WriteLine("Please enter a single letter.\n");
-                continue;
+                default:
+                    Console.WriteLine("Wrong Option. Enter again\n");
+                        break;
             }
-
-            char guess = char.ToLower(input[0]);
-
-            if (triedLetters.Contains(guess))
-            {
-                Console.WriteLine("You already tried that letter!\n");
-                continue;
-            }
-
-            triedLetters.Add(guess);
-
-            if (word.Contains(guess))
-            {
-                Console.WriteLine("Good guess!\n");
-                for (int i = 0; i < word.Length; i++)
-                {
-                    if (word[i] == guess)
-                    {
-                        guessed[i] = guess;
-                    }
-                }
-            }
-            else
-            {
-                Console.WriteLine("Wrong guess!\n");
-                lives--;
-            }
-        }
-
-        Console.WriteLine(hangmanStages[6-lives]);
-        if (new string(guessed) == word)
-        {
-            Console.WriteLine($"Congratulations! You guessed the word: {word}\n");
-        }
-        else
-        {
-            Console.WriteLine($"You lost! The word was: {word}\n");
         }
     }
+
 }
