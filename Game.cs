@@ -55,7 +55,7 @@ public class Game{
             }
             else
             {
-                Console.WriteLine("File does not exists");
+                Console.WriteLine("File does not exists\n");
                 return;
             }
         
@@ -131,10 +131,11 @@ public class Game{
 ========="
         };
 
+        Console.WriteLine("====================================\n");
         Console.WriteLine("\nNew Game Started!\n");
 
         while (lives > 0 && new string(guessed) != word)
-        {
+        {   Console.WriteLine("----------------------------------");
             Console.WriteLine(hangmanStages[6-lives]);
             Console.WriteLine($"Word: {new string(guessed)}");
             Console.WriteLine($"Lives remaining: {lives}");
@@ -143,7 +144,7 @@ public class Game{
             string input = Console.ReadLine() ?? "";
             if (input.Length != 1 || !char.IsLetter(input[0]))
             {
-                Console.WriteLine("Please enter a single letter.\n");
+                Console.WriteLine("\nPlease enter a single letter.\n");
                 continue;
             }
 
@@ -151,7 +152,7 @@ public class Game{
 
             if (triedLetters.Contains(guess))
             {
-                Console.WriteLine("You already tried that letter!\n");
+                Console.WriteLine("\nYou already tried that letter!\n");
                 wrongGuess.Add(guess);
                 continue;
             }
@@ -160,7 +161,7 @@ public class Game{
 
             if (word.ToLower().Contains(guess))
             {
-                Console.WriteLine("Good guess!\n");
+                Console.WriteLine("\nGood guess!\n");
                 for (int i = 0; i < word.Length; i++)
                 {
                     if (word.ToLower()[i] == guess)
@@ -171,7 +172,7 @@ public class Game{
             }
             else
             {
-                Console.WriteLine("Wrong guess!\n");
+                Console.WriteLine("\nWrong guess!\n");
                 lives--;
                 wrongGuess.Add(guess);
             }
@@ -192,6 +193,7 @@ public class Game{
     }
 
     private static void printResult(List<char> wrongGuess){
+        Console.WriteLine("====================================\n");
         var stats = wrongGuess
             .GroupBy(c => c)
             .Select(g => new { Letter = g.Key, Count = g.Count() })
@@ -202,18 +204,20 @@ public class Game{
         {
             Console.WriteLine($"{stat.Letter}: {stat.Count} times wrong");
         }
+        Console.WriteLine("====================================\n");
     }
 
     public static void suggestWords(){
         Console.WriteLine("******* WORD SUGGESTION *******\n");
         
         while (true){
-            Console.WriteLine("\n-------------------------------\n");
+            Console.WriteLine("-------------------------------\n");
             Console.WriteLine("Enter Option:\n");
             Console.WriteLine("If you want to suggest more words: CONTINUE\n");
             Console.WriteLine("If you want to exit: EXIT\n");
 
             string input = Console.ReadLine() ?? "";
+            Console.WriteLine("-------------------------------\n");
             switch(input.ToLower()){
                 case "continue":
                     Console.WriteLine("Enter one word at a time without whitespaces\n");
@@ -234,6 +238,7 @@ public class Game{
                 default:
                     Console.WriteLine("Wrong Option. Enter again\n");
                     break;
+                
             }
         }
     }

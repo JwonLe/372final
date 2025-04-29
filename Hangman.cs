@@ -11,9 +11,9 @@ public class Hangman{
     static void Main(string[] args) {
 
         Console.WriteLine("*************HANG MAN*************\n");
-            Console.WriteLine("\nENTER AN OPTION\n");
             while(true){
-                Console.WriteLine("\nIF YOU WANT TO START A GAME: START\n");
+                Console.WriteLine("ENTER AN OPTION\n");
+                Console.WriteLine("IF YOU WANT TO START A GAME: START\n");
                 Console.WriteLine("IF YOU WANT TO SUGGEST WORDS: SUGGEST\n");
                 Console.WriteLine("IF YOU WANT TO EXIT: EXIT\n");
                 string input = Console.ReadLine() ?? "";
@@ -68,8 +68,9 @@ public class Hangman{
 
     private static String askMode(){
         while (true){
-            Console.WriteLine("\nChoose Mode:\n");
-            Console.WriteLine("Enter Easy / Intermediate / Hard / Multiplayer\n");
+            Console.WriteLine("\n====================================\n");
+            Console.WriteLine("Choose Mode:\n");
+            Console.WriteLine("Enter: Easy / Intermediate / Hard / Multiplayer\n");
             string mode = Console.ReadLine() ?? "";
             switch (mode.ToLower()){
                 case "easy":
