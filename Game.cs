@@ -1,6 +1,7 @@
 using System.IO;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 
 public class Game{
@@ -64,6 +65,7 @@ public class Game{
     }
     public static void playGame(string mode){
 
+        List<char> wrongGuess = new List<char>();
         string word;
         if (mode == "multiplayer"){
             word = chooseWord();
@@ -191,6 +193,7 @@ public class Game{
             if (triedLetters.Contains(guess))
             {
                 Console.WriteLine("You already tried that letter!\n");
+                wrongGuess.Add(guess);
                 continue;
             }
 
@@ -211,6 +214,7 @@ public class Game{
             {
                 Console.WriteLine("Wrong guess!\n");
                 lives--;
+                wrongGuess.Add(guess);
             }
         }
 
@@ -223,6 +227,67 @@ public class Game{
         {
             Console.WriteLine($"You lost! The word was: {word}\n");
         }
+        printResult(wrongGuess);
     }
+
+    private static void printResult(List<char> wrongGuess){
+         Console.WriteLine("====================================\n");
+         var stats = wrongGuess
+             .GroupBy(c => c)
+             .Select(g => new { Letter = g.Key, Count = g.Count() })
+             .OrderByDescending(g => g.Count);
+ 
+         Console.WriteLine("Stats For Wrong Guesses:");
+         foreach (var stat in stats)
+         {
+             Console.WriteLine($"{stat.Letter}: {stat.Count} times wrong");
+         }
+         Console.WriteLine("====================================\n");
+     }
+ 
+     public static void suggestWords(){
+         Console.WriteLine("******* WORD SUGGESTION *******\n");
+         
+         while (true){
+             Console.WriteLine("-------------------------------\n");
+             Console.WriteLine("Enter Option:\n");
+             Console.WriteLine("If you want to suggest more words: CONTINUE\n");
+             Console.WriteLine("If you want to exit: EXIT\n");
+ 
+             string input = Console.ReadLine() ?? "";
+             Console.WriteLine("-------------------------------\n");
+             switch(input.ToLower()){
+                 case "continue":
+                     Console.WriteLine("Enter one word at a time without whitespaces\n");
+                     string suggest = Console.ReadLine() ?? "";
+                     if (hasNonLetter(suggest)){
+                         Console.WriteLine("The input contains non-alphabet character.\n");
+                         Console.WriteLine("Try again.\n");
+                     }else{
+                         clasifyWord(suggest.ToLower());
+                         Console.WriteLine("The word is added.\n");
+                     }
+                     break;
+ 
+                 case "exit":
+                     Console.WriteLine("Thank you for your suggestions!\n");
+                     return;
+                 
+                 default:
+                     Console.WriteLine("Wrong Option. Enter again\n");
+                     break;
+                 
+             }
+         }
+     }
+     private static void clasifyWord(string word){
+         if (word.Length <= 4){
+             File.AppendAllText("easy.txt", $"{word}\n");
+         }else if (word.Length <= 8){
+             File.AppendAllText("intermediate.txt", $"{word}\n");
+         }else{
+             File.AppendAllText("hard.txt", $"{word}\n");
+         }
+     }
 
 }
