@@ -64,7 +64,7 @@ public class Hangman{
     private static String askMode(){
         while (true){
             Console.WriteLine("\nChoose Mode:\n");
-            Console.WriteLine("Enter Easy / Intermediate / Hard\n");
+            Console.WriteLine("Enter Easy / Intermediate / Hard / Multiplayer\n");
             string mode = Console.ReadLine() ?? "";
             switch (mode.ToLower()){
                 case "easy":
@@ -75,6 +75,9 @@ public class Hangman{
                 
                 case "hard":
                     return "hard";
+                    
+                case "multiplayer":
+                    return "multiplayer";
 
                 default:
                     Console.WriteLine("Wrong Option. Enter again\n");
