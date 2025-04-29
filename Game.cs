@@ -1,17 +1,21 @@
 using System.IO;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+
 
 public class Game{
 
     public static void playGame(string mode){
+        List<char> wrongGuess = new List<char>();
 
+/**
         if (mode.equals("multiplayer")){
             Console.WriteLine("BRUH");
-        }
+        }*/
         String filePath = mode + ".txt";
 
-        List<string> wordList = null;
+        List<string> wordList;
 
         if (File.Exists(filePath))
         {
@@ -114,6 +118,7 @@ public class Game{
             if (triedLetters.Contains(guess))
             {
                 Console.WriteLine("You already tried that letter!\n");
+                wrongGuess.Add(guess);
                 continue;
             }
 
@@ -134,6 +139,7 @@ public class Game{
             {
                 Console.WriteLine("Wrong guess!\n");
                 lives--;
+                wrongGuess.Add(guess);
             }
         }
 
@@ -146,6 +152,23 @@ public class Game{
         {
             Console.WriteLine($"You lost! The word was: {word}\n");
         }
+
+        printResult(wrongGuess);
+        
     }
+
+    private static void printResult(List<char> wrongGuess){
+        var stats = wrongGuess
+            .GroupBy(c => c)
+            .Select(g => new { Letter = g.Key, Count = g.Count() })
+            .OrderByDescending(g => g.Count);
+
+        Console.WriteLine("Stats For Wrong Guesses:");
+        foreach (var stat in stats)
+        {
+            Console.WriteLine($"{stat.Letter}: {stat.Count}times wrong");
+        }
+    }
+
 
 }
