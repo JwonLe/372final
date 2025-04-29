@@ -67,10 +67,71 @@ public class Hangman{
         
         int lives = 6;
 
+        string[] hangmanStages = new string[]
+        {
+@"
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========",
+@"
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========",
+@"
+  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========",
+@"
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========",
+@"
+  +---+
+  |   |
+  O   |
+ /|\  |
+      |
+      |
+=========",
+@"
+  +---+
+  |   |
+  O   |
+ /|\  |
+ /    |
+      |
+=========",
+@"
+  +---+
+  |   |
+  O   |
+ /|\  |
+ / \  |
+      |
+========="
+        };
+
         Console.WriteLine("\nNew Game Started!\n");
 
         while (lives > 0 && new string(guessed) != word)
         {
+            Console.WriteLine(hangmanStages[6-lives]);
             Console.WriteLine($"Word: {new string(guessed)}");
             Console.WriteLine($"Lives remaining: {lives}");
             Console.WriteLine("Enter your guess (one letter):");
@@ -110,6 +171,7 @@ public class Hangman{
             }
         }
 
+        Console.WriteLine(hangmanStages[6-lives]);
         if (new string(guessed) == word)
         {
             Console.WriteLine($"Congratulations! You guessed the word: {word}\n");
