@@ -1,7 +1,13 @@
 /*
-File: hangman.cs
-Purpose: Incldues main
-*/
+ * File: Hangman.cs
+ * Description: Entry point for the Hangman game.
+ *              Provides the main game menu and handles user interaction flow.
+ *              Supports starting a game, suggesting new words, and exiting.
+ * 
+ * Author: Daniel Reynaldo, Juwon Lee, Mustafa Alnidawi, Noah Belara Reyes
+ * Course: CSc 372 - Final Project, Spring 2025
+ */
+
 
 using System;
 using System.Collections.Generic;
@@ -68,6 +74,12 @@ public class Hangman{
         }
     }
 
+    /*
+     * Funtion: askMode
+     * Purpose: asks which mode the user is going to play before starting a game.
+     * Input:   None
+     * Output:  String  -   a string indicatring mode
+     */
     private static String askMode(){
         while (true){
             Console.WriteLine("\n*************Choose Mode*************");

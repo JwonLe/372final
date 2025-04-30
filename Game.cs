@@ -1,3 +1,17 @@
+/*
+ * File: Game.cs
+ * Description: Contains the game logic for Hangman, including:
+ *              - Word selection (single-player and multiplayer)
+ *              - Main gameplay loop with input handling and hangman display
+ *              - Hint system
+ *              - Time limit mode
+ *              - Word suggestion feature with classification (easy/intermediate/hard)
+ *              - Post-game stats summary
+ * 
+ * Author: Daniel Reynaldo, Juwon Lee, Mustafa Alnidawi, Noah Belara Reyes
+ * Course: CSc 372 - Final Project, Spring 2025
+ */
+
 using System.IO;
 using System;
 using System.Collections.Generic;
@@ -7,6 +21,12 @@ using System.Linq;
 public class Game{
 
 
+    /*
+     * Funtion: hasNonLetter
+     * Purpose: checks whether the input contains non-alphabet chars
+     * Input: string word
+     * Output:  if an input contains non-alphabet char, returns true, otherwise false.
+     */
     private static bool hasNonLetter(string word){
         foreach (char c in word){
             if (!char.IsLetter(c)){
@@ -17,6 +37,12 @@ public class Game{
         return false;
     }
 
+    /*
+     * Funtion:
+     * Purpose:
+     * Input:
+     * Output:
+     */
     private static int GetHint(string word, char[] guessed, HashSet<char> triedLetters)
     {
         // Create a random number generator to pick a random hint letter
@@ -42,6 +68,12 @@ public class Game{
         return randomIndex; // Return the index of the unguessed letter
     }
 
+    /*
+     * Funtion:
+     * Purpose:
+     * Input:
+     * Output:
+     */
     private static String chooseWord(){
 
             Console.WriteLine("\nEnter a word for the other player to guess!\n");
@@ -63,6 +95,13 @@ public class Game{
 
             return word;
     }
+
+    /*
+     * Funtion: playGame
+     * Purpose: main logic of the hangman game.
+     * Input: String mode
+     * Output: none.
+     */
     public static void playGame(string mode){
 
         List<char> wrongGuess = new List<char>();
@@ -272,6 +311,13 @@ public class Game{
         printResult(wrongGuess);
     }
 
+    /*
+     * Funtion: printResult
+     * Purpose: prints out stats of wrong guesses
+     * Input: List<char> wrongGuess -   list of wrong guesses that user attempted
+              during playing game.
+     * Output: non.
+     */
     private static void printResult(List<char> wrongGuess){
          Console.WriteLine("====================================");
          var stats = wrongGuess
@@ -286,7 +332,14 @@ public class Game{
          }
          Console.WriteLine("====================================\n");
      }
- 
+
+     /*
+     * Funtion: suggestWords
+     * Purpose: Provides a loop where the player can suggest new words to add.
+     *          Validates input and classifies the word based on its length.
+     * Input: none
+     * Output: none
+     */
      public static void suggestWords(){
          Console.WriteLine("\n******* WORD SUGGESTION *******\n");
          
@@ -322,6 +375,13 @@ public class Game{
              }
          }
      }
+
+     /*
+     * Funtion: clasifyWord
+     * Purpose: appends the given word to a different files based on word length.
+     * Input: string word   -   a lower case with no non-alphabet chars
+     * Output: none.
+     */
      private static void clasifyWord(string word){
          if (word.Length <= 4){
              File.AppendAllText("easy.txt", $"{word}\n");
