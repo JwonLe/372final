@@ -101,7 +101,7 @@ public class Game{
             if(time == "y"){
                 isTimed = true;
                 startTime = DateTime.Now;
-                timeLimit = TimeSpan.FromSeconds(60);
+                timeLimit = TimeSpan.FromSeconds(30);
             }
         }
 
