@@ -67,6 +67,10 @@ public class Game{
 
         List<char> wrongGuess = new List<char>();
         string word;
+        bool isTimed = false;
+        DateTime startTime = DateTime.MinValue;
+        TimeSpan timeLimit = TimeSpan.Zero; 
+
         if (mode == "multiplayer"){
             word = chooseWord();
         }
@@ -89,6 +93,16 @@ public class Game{
             Random rand = new Random();
 
             word = wordList[rand.Next(wordList.Count)].Trim();
+
+            Console.WriteLine("Do you want you attempt to be timed?\n");
+            Console.WriteLine("Enter y/n\n");
+            string time = Console.ReadLine() ?? "";
+
+            if(time == "y"){
+                isTimed = true;
+                startTime = DateTime.Now;
+                timeLimit = TimeSpan.FromSeconds(60);
+            }
         }
 
 
@@ -161,12 +175,28 @@ public class Game{
 
         while (lives > 0 && new string(guessed) != word)
         {
+            if(isTimed && DateTime.Now - startTime >= timeLimit){
+                Console.WriteLine("Time's up!");
+                break;
+            }
+
             Console.WriteLine(hangmanStages[6-lives]);
             Console.WriteLine($"Word: {new string(guessed)}");
             Console.WriteLine($"Lives remaining: {lives}");
-            Console.WriteLine("Enter your guess (one letter) or type 'hint' to get a hint:");
 
+            if(isTimed){
+                TimeSpan remaining = timeLimit - (DateTime.Now - startTime);
+                Console.WriteLine($"Time remaining: {remaining.Seconds} seconds");
+            }
+            Console.WriteLine("Enter your guess (one letter) or type 'hint' to get a hint:");
             string input = Console.ReadLine() ?? "";
+
+            if (isTimed && DateTime.Now - startTime >= timeLimit)
+            {
+                Console.WriteLine("Time's up!");
+                break;
+            }
+
 
             if (input.ToLower() == "hint") {
                 int hintIndex = GetHint(word, guessed, triedLetters);
@@ -222,6 +252,11 @@ public class Game{
         if (new string(guessed) == word)
         {
             Console.WriteLine($"Congratulations! You guessed the word: {word}\n");
+        }
+        else if (isTimed && DateTime.Now - startTime >= timeLimit)
+        {
+            Console.WriteLine("You lost due to time running out!\n");
+            Console.WriteLine($"The word was: {word}\n");
         }
         else
         {
