@@ -12,10 +12,12 @@ public class Hangman{
 
         Console.WriteLine("*************HANG MAN*************\n");
             while(true){
+                Console.WriteLine("************************************");
                 Console.WriteLine("ENTER AN OPTION\n");
                 Console.WriteLine("IF YOU WANT TO START A GAME: START\n");
                 Console.WriteLine("IF YOU WANT TO SUGGEST WORDS: SUGGEST\n");
-                Console.WriteLine("IF YOU WANT TO EXIT: EXIT\n");
+                Console.WriteLine("IF YOU WANT TO EXIT: EXIT");
+                Console.WriteLine("************************************");
                 string input = Console.ReadLine() ?? "";
 
             
@@ -59,7 +61,7 @@ public class Hangman{
                         break;
 
                     default:
-                        Console.WriteLine("Wrong Option. Enter again\n");
+                        Console.WriteLine("- Wrong Option. Enter again\n");
                         break;
                 }
                 
@@ -68,9 +70,8 @@ public class Hangman{
 
     private static String askMode(){
         while (true){
-            Console.WriteLine("\n====================================\n");
-            Console.WriteLine("Choose Mode:\n");
-            Console.WriteLine("Enter: Easy / Intermediate / Hard / Multiplayer\n");
+            Console.WriteLine("\n*************Choose Mode*************");
+            Console.WriteLine("Enter: Easy / Intermediate / Hard / Multiplayer");
             string mode = Console.ReadLine() ?? "";
             switch (mode.ToLower()){
                 case "easy":

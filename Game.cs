@@ -77,7 +77,7 @@ public class Game{
         else{
             String filePath = mode + ".txt";
 
-            List<string> wordList = null;
+            List<string> wordList;
 
             if (File.Exists(filePath))
             {
@@ -94,8 +94,8 @@ public class Game{
 
             word = wordList[rand.Next(wordList.Count)].Trim();
 
-            Console.WriteLine("Do you want you attempt to be timed?\n");
-            Console.WriteLine("Enter y/n\n");
+            Console.WriteLine("Do you want you attempt to be timed?");
+            Console.WriteLine("Enter y/n");
             string time = Console.ReadLine() ?? "";
 
             if(time == "y"){
@@ -171,10 +171,15 @@ public class Game{
 ========="
         };
 
-        Console.WriteLine("\nNew Game Started!\n");
+        Console.WriteLine("\n************************************");
+        Console.WriteLine("New Game Started!\n");
+        int turn = 1;
 
         while (lives > 0 && new string(guessed) != word)
         {
+            Console.WriteLine("\n====================================");
+            Console.WriteLine($"            TURN {turn}");
+            Console.WriteLine("====================================\n");
             if(isTimed && DateTime.Now - startTime >= timeLimit){
                 Console.WriteLine("Time's up!");
                 break;
@@ -246,6 +251,8 @@ public class Game{
                 lives--;
                 wrongGuess.Add(guess);
             }
+            turn ++;
+
         }
 
         Console.WriteLine(hangmanStages[6-lives]);
@@ -281,7 +288,7 @@ public class Game{
      }
  
      public static void suggestWords(){
-         Console.WriteLine("******* WORD SUGGESTION *******\n");
+         Console.WriteLine("\n******* WORD SUGGESTION *******\n");
          
          while (true){
              Console.WriteLine("-------------------------------\n");
