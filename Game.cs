@@ -231,7 +231,7 @@ public class Game{
     }
 
     private static void printResult(List<char> wrongGuess){
-         Console.WriteLine("====================================\n");
+         Console.WriteLine("====================================");
          var stats = wrongGuess
              .GroupBy(c => c)
              .Select(g => new { Letter = g.Key, Count = g.Count() })
