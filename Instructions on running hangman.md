@@ -2,6 +2,7 @@
 
 ## Overview
 This is a CLI-based Hangman game implemented in C#. It supports single-player and multiplayer modes, a hint system, word suggestion, and a persistent scoring system.
+
 Authors: Daniel Reynaldo, Juwon Lee, Mustafa Alnidawi, Noah Belara Reyes
 
 ---
