@@ -38,12 +38,16 @@ public class Game{
     }
 
     /*
-     * Funtion:
-     * Purpose:
+     * Funtion:getHint
+     * Purpose: Provides a hint by selecting a random index of an unguessed letter in the target word.
      * Input:
-     * Output:
+     *  - string word: the target word to guess
+     *  - char[] guessed: the current state of guessed letters
+     *  - HashSet<char>: triedLetters: letters the user has already guessed
+     * Output: 
+     *  - int: index of a random unguessed letter in the word, or -1 if all letters have been guessed
      */
-    private static int GetHint(string word, char[] guessed, HashSet<char> triedLetters)
+    private static int getHint(string word, char[] guessed, HashSet<char> triedLetters)
     {
         // Create a random number generator to pick a random hint letter
         Random rand = new Random();
@@ -69,10 +73,10 @@ public class Game{
     }
 
     /*
-     * Funtion:
-     * Purpose:
-     * Input:
-     * Output:
+     * Funtion: chooseWord
+     * Purpose: prompts the player to enter a word for another player to guess in multiplayer
+     * Input: user input via command line
+     * Output: String which was entered
      */
     private static String chooseWord(){
 
@@ -87,7 +91,7 @@ public class Game{
                     Console.WriteLine("You must only use letters!!!\n");
                 }
 
-                word = Console.ReadLine().Trim() ?? "";
+                word = (Console.ReadLine() ?? "").Trim();
 
                 reattempt = true;
             } while (hasNonLetter(word));
@@ -100,9 +104,9 @@ public class Game{
      * Funtion: playGame
      * Purpose: main logic of the hangman game.
      * Input: String mode
-     * Output: none.
+     * Output: returns a new score to save from playing the round.
      */
-    public static void playGame(string mode){
+    public static int playGame(string mode, int score){
 
         List<char> wrongGuess = new List<char>();
         string word;
@@ -110,6 +114,7 @@ public class Game{
         DateTime startTime = DateTime.MinValue;
         TimeSpan timeLimit = TimeSpan.Zero; 
 
+        // Choose word based on which mode is selected
         if (mode == "multiplayer"){
             word = chooseWord();
         }
@@ -118,6 +123,7 @@ public class Game{
 
             List<string> wordList;
 
+            // Open file for difficulty
             if (File.Exists(filePath))
             {
                 wordList = new List<string>(File.ReadAllLines(filePath));
@@ -125,18 +131,19 @@ public class Game{
             else
             {
                 Console.WriteLine("File does not exists");
-                return;
+                return score;
             }
-        
-
+    
             Random rand = new Random();
 
+            // get random word and trim whitespace if any
             word = wordList[rand.Next(wordList.Count)].Trim();
 
-            Console.WriteLine("Do you want you attempt to be timed?");
+            Console.WriteLine("Do you want your attempt to be timed?");
             Console.WriteLine("Enter y/n");
             string time = Console.ReadLine() ?? "";
 
+            
             if(time == "y"){
                 isTimed = true;
                 startTime = DateTime.Now;
@@ -144,7 +151,7 @@ public class Game{
             }
         }
 
-
+        // blank guess ui space for word
         char[] guessed = new string('_', word.Length).ToCharArray();
         HashSet<char> triedLetters = new HashSet<char>();
         
@@ -213,9 +220,14 @@ public class Game{
         Console.WriteLine("\n************************************");
         Console.WriteLine("New Game Started!\n");
         int turn = 1;
+        int roundScore = 0;
+        int hintsUsed = 0;
 
+        // Player attempt to guess letter
         while (lives > 0 && new string(guessed) != word)
         {
+            
+            
             Console.WriteLine("\n====================================");
             Console.WriteLine($"            TURN {turn}");
             Console.WriteLine("====================================\n");
@@ -232,6 +244,8 @@ public class Game{
                 TimeSpan remaining = timeLimit - (DateTime.Now - startTime);
                 Console.WriteLine($"Time remaining: {remaining.Seconds} seconds");
             }
+
+
             Console.WriteLine("Enter your guess (one letter) or type 'hint' to get a hint:");
             string input = Console.ReadLine() ?? "";
 
@@ -243,7 +257,7 @@ public class Game{
 
 
             if (input.ToLower() == "hint") {
-                int hintIndex = GetHint(word, guessed, triedLetters);
+                int hintIndex = getHint(word, guessed, triedLetters);
 
                 if (hintIndex == -1)
                 {
@@ -252,10 +266,13 @@ public class Game{
                 else
                 {
                     Console.WriteLine($"Here's a hint: The letter at position {hintIndex + 1} is '{word[hintIndex]}'.");
+                    hintsUsed++;
                 }
                 continue;
             }
 
+
+            // Validate user input to be one letter
             if (input.Length != 1 || !char.IsLetter(input[0]))
             {
                 Console.WriteLine("Please enter a single letter.\n");
@@ -264,6 +281,7 @@ public class Game{
 
             char guess = char.ToLower(input[0]);
 
+            // determine if player already guessed letter
             if (triedLetters.Contains(guess))
             {
                 Console.WriteLine("You already tried that letter!\n");
@@ -271,8 +289,11 @@ public class Game{
                 continue;
             }
 
+
             triedLetters.Add(guess);
 
+
+            // Correct letter
             if (word.ToLower().Contains(guess))
             {
                 Console.WriteLine("Good guess!\n");
@@ -284,6 +305,7 @@ public class Game{
                     }
                 }
             }
+            // incorrect letter
             else
             {
                 Console.WriteLine("Wrong guess!\n");
@@ -294,21 +316,45 @@ public class Game{
 
         }
 
+        // End of round
         Console.WriteLine(hangmanStages[6-lives]);
         if (new string(guessed) == word)
         {
             Console.WriteLine($"Congratulations! You guessed the word: {word}\n");
+
+            // Get score earned, penalized by each hint, and rewarded with more lives remaining.
+            // score scales with size of word
+            roundScore = ((lives) * 100) * word.Length - (hintsUsed * 200);
+            if (roundScore < 50){
+                roundScore = 50;
+            }
+
+            // display score from round
+            Console.WriteLine($"You've earned {roundScore} points\n");
+
+            // Add to score
+            score+=roundScore;
+
+            // Write to file new score
+            Console.WriteLine($"Your Score is now {score}!!! Saving to file...\n");
+            File.WriteAllText("playerScore.txt", score.ToString());
+            
         }
+        // Out of time
         else if (isTimed && DateTime.Now - startTime >= timeLimit)
         {
             Console.WriteLine("You lost due to time running out!\n");
             Console.WriteLine($"The word was: {word}\n");
         }
+        // Didn't guess word in amount of lives
         else
         {
             Console.WriteLine($"You lost! The word was: {word}\n");
         }
         printResult(wrongGuess);
+
+        // return new score (or same score if didn't win)
+        return score;
     }
 
     /*

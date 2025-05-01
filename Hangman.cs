@@ -18,6 +18,30 @@ public class Hangman{
 
         Console.WriteLine("*************HANG MAN*************\n");
             while(true){
+                
+                int score = 0;
+                // Read playerScore file to get saved score
+                String filePath = "playerScore.txt";
+                if (File.Exists(filePath))
+                {
+                    String scoreStr = File.ReadLines(filePath).First();
+                    Console.WriteLine("Your Score: " + scoreStr);
+                    
+
+                    if (int.TryParse(scoreStr, out int number)) {
+                        score = number;
+                    } 
+                    else {
+                        Console.WriteLine("Error: Couldn't read number\n");
+                    }
+                    
+                }
+                else
+                {
+                    Console.WriteLine("Error: playerScore.txt does not exists");
+                }
+
+
                 Console.WriteLine("************************************");
                 Console.WriteLine("ENTER AN OPTION\n");
                 Console.WriteLine("IF YOU WANT TO START A GAME: START\n");
@@ -35,7 +59,7 @@ public class Hangman{
 
                             string mode = askMode();
 
-                            Game.playGame(mode.ToLower());
+                            score = Game.playGame(mode.ToLower(), score);
 
 
                             Console.WriteLine("\nDo you want to play one more game?\n");
