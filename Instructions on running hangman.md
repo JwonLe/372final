@@ -74,5 +74,5 @@ Respond with `y` or `n`.
 
 ## 8. Ending the Game
 - After finishing a round, you’ll be asked if you want to play again (`y/n`).
-- Typing `n` will exit the program gracefully.
+- Typing `n` will exit the program.
 - Or if you are in main menu, typing `EXIT` will exit the program.
