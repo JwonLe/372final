@@ -16,6 +16,12 @@ public class Hangman{
     
     static void Main(string[] args) {
 
+        // To test, enter dotnet run -- test
+        if (args.Contains("test")) {
+        Test.RunAllTests();
+        return;
+        }
+
         Console.WriteLine("*************HANG MAN*************\n");
             while(true){
                 

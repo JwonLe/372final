@@ -7,6 +7,7 @@
  *              - Time limit mode
  *              - Word suggestion feature with classification (easy/intermediate/hard)
  *              - Post-game stats summary
+ *              - Score system
  * 
  * Author: Daniel Reynaldo, Juwon Lee, Mustafa Alnidawi, Noah Belara Reyes
  * Course: CSc 372 - Final Project, Spring 2025
@@ -19,8 +20,6 @@ using System.Linq;
 
 
 public class Game{
-
-
     /*
      * Funtion: hasNonLetter
      * Purpose: checks whether the input contains non-alphabet chars
@@ -47,7 +46,7 @@ public class Game{
      * Output: 
      *  - int: index of a random unguessed letter in the word, or -1 if all letters have been guessed
      */
-    private static int getHint(string word, char[] guessed, HashSet<char> triedLetters)
+    private static int getHint(string word, char[] guessed)
     {
         // Create a random number generator to pick a random hint letter
         Random rand = new Random();
@@ -257,7 +256,7 @@ public class Game{
 
 
             if (input.ToLower() == "hint") {
-                int hintIndex = getHint(word, guessed, triedLetters);
+                int hintIndex = getHint(word, guessed);
 
                 if (hintIndex == -1)
                 {
