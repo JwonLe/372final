@@ -8,6 +8,7 @@ This is a CLI-based Hangman game implemented in C#. It supports single-player an
 ## 1. Starting the Game
 - Run the program with `dotnet run`.
 - If `playerScore.txt` exists, it will load your last saved score.
+  - If it is your first time playing, the default score is 0.
 - You will see a menu with options:
   - `START`: begin a new game
   - `SUGGEST`: suggest new words for future games
@@ -36,13 +37,12 @@ Respond with `y` or `n`.
 (minimum score: 50)
 ```
 
-- Score is saved in `playerScore.txt`.
+- Score is updated in `playerScore.txt`.
 
 ---
 
 ## 4. Hint System
 - Type `hint` during gameplay to reveal one unguessed letter.
-- Only works once per game.
 - Using a hint reduces your final score.
 
 ---
@@ -75,3 +75,4 @@ Respond with `y` or `n`.
 ## 8. Ending the Game
 - After finishing a round, you’ll be asked if you want to play again (`y/n`).
 - Typing `n` will exit the program gracefully.
+- Or if you are in main menu, typing `EXIT` will exit the program.
