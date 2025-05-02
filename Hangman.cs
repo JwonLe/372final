@@ -25,6 +25,12 @@ public class Hangman{
         run();
     }
 
+    /*
+     * Funtion: run
+     * Purpose: starts the game. 
+     * Input:   None
+     * Output:  String  -   a string indicatring mode
+     */
     public static void run(){
         Console.WriteLine("*************HANG MAN*************\n");
             while(true){
@@ -76,6 +82,7 @@ public class Hangman{
                             while(invalidCommand){
                                 Console.WriteLine("\nDo you want to play one more game?\n");
                                 Console.WriteLine("Enter y/n\n");
+                                Console.WriteLine("If you want to exist enter EXIT\n");
                                 string newGame = (Console.ReadLine() ?? "").Trim();
 
                                 switch(newGame.ToLower()){
@@ -84,6 +91,12 @@ public class Hangman{
                                         break;
 
                                     case "n":
+                                        Console.WriteLine("\nGood bye!\n");
+                                        keepPlaying = false;
+                                        invalidCommand = false;
+                                        return;
+
+                                    case "exit":
                                         Console.WriteLine("\nGood bye!\n");
                                         keepPlaying = false;
                                         invalidCommand = false;
@@ -123,6 +136,7 @@ public class Hangman{
         while (true){
             Console.WriteLine("\n*************Choose Mode*************");
             Console.WriteLine("Enter: Easy / Intermediate / Hard / Multiplayer");
+            Console.WriteLine("If you want to exit, enter EXIT");
             string mode = (Console.ReadLine() ?? "").Trim();
             switch (mode.ToLower()){
                 case "easy":
@@ -136,6 +150,11 @@ public class Hangman{
                     
                 case "multiplayer":
                     return "multiplayer";
+
+                case "exit":
+                    Console.WriteLine("Good bye!");
+                    Environment.Exit(0);
+                    break;
 
                 default:
                     Console.WriteLine("Wrong Option. Enter again\n");

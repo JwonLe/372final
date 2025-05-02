@@ -11,3 +11,4 @@ s
 t
 r
 n
+exit

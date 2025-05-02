@@ -1,3 +1,10 @@
+/*
+ * File: Test.cs
+ * Description: class for testing. 
+ * 
+ * Author: Daniel Reynaldo, Juwon Lee, Mustafa Alnidawi, Noah Belara Reyes
+ * Course: CSc 372 - Final Project, Spring 2025
+ */
 using System;
 using System.IO;
 

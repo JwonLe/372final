@@ -11,3 +11,4 @@ n
 m
 h
 n
+exit

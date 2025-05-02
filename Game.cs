@@ -140,6 +140,7 @@ public class Game{
 
             Console.WriteLine("Do you want your attempt to be timed?");
             Console.WriteLine("Enter y to attempt, enter other alphabet to not attempt.");
+            Console.WriteLine("If you want to end game, enter EXIT.");
             string time = (Console.ReadLine() ?? "").Trim();
 
             
@@ -147,6 +148,11 @@ public class Game{
                 isTimed = true;
                 startTime = DateTime.Now;
                 timeLimit = TimeSpan.FromSeconds(30);
+            }
+
+            if(time.ToLower() == "exit"){
+                Console.WriteLine("Good bye!");
+                Environment.Exit(0);
             }
         }
 
@@ -246,6 +252,7 @@ public class Game{
 
 
             Console.WriteLine("Enter your guess (one letter) or type 'hint' to get a hint:");
+            Console.WriteLine("If you want to exit the game, enter 'exit':");
             string input = (Console.ReadLine() ?? "").Trim();
 
             if (isTimed && DateTime.Now - startTime >= timeLimit)
@@ -268,6 +275,11 @@ public class Game{
                     hintsUsed++;
                 }
                 continue;
+            }
+
+            if (input.ToLower() == "exit") {
+                Console.WriteLine("Good bye!");
+                Environment.Exit(0);
             }
 
 
