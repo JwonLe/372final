@@ -1,0 +1,13 @@
+start
+multiplayer
+hangman
+a
+e
+i
+o
+hint
+g
+n
+m
+h
+n
