@@ -3,16 +3,30 @@
 ## Overview
 This is a CLI-based Hangman game implemented in C#. It supports single-player and multiplayer modes, a hint system, word suggestion, and a persistent scoring system.
 
+Authors: Daniel Reynaldo, Juwon Lee, Mustafa Alnidawi, Noah Belara Reyes
+
 ---
 
 ## 0. Running the Test
+- Install .Net from Microsoft
 - Run the program with `dotnet run -- test`.
+  - If you get an error about no project file detected, create a project folder using `dotnet new console -o Hangman`
+  - `cd Hangman`
+  - `rm Program.cs` so that this file is not defaultly run.
+  - Copy and paste all files into the newly created /Hangman directory
+  - `dotnet run -- test`
 - This command only runs tests and terminates the program, not running the game.
 
 ---
 
 ## 1. Starting the Game
+- Install .Net from Microsoft
 - Run the program with `dotnet run`.
+  - If you get an error about no project file detected, create a project folder using `dotnet new console -o Hangman`
+  - `cd Hangman`
+  - `rm Program.cs` so that this file is not defaultly run.
+  - Copy and paste all files into the newly created /Hangman directory
+  - `dotnet run`
 - If `playerScore.txt` exists, it will load your last saved score.
   - If it is your first time playing, the default score is 0.
 - You will see a menu with options:
