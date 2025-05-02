@@ -139,8 +139,8 @@ public class Game{
             word = wordList[rand.Next(wordList.Count)].Trim();
 
             Console.WriteLine("Do you want your attempt to be timed?");
-            Console.WriteLine("Enter y/n");
-            string time = Console.ReadLine() ?? "";
+            Console.WriteLine("Enter y to attempt, enter other alphabet to not attempt.");
+            string time = (Console.ReadLine() ?? "").Trim();
 
             
             if(time == "y"){
@@ -246,7 +246,7 @@ public class Game{
 
 
             Console.WriteLine("Enter your guess (one letter) or type 'hint' to get a hint:");
-            string input = Console.ReadLine() ?? "";
+            string input = (Console.ReadLine() ?? "").Trim();
 
             if (isTimed && DateTime.Now - startTime >= timeLimit)
             {
@@ -394,12 +394,12 @@ public class Game{
              Console.WriteLine("If you want to suggest more words: CONTINUE\n");
              Console.WriteLine("If you want to exit: EXIT\n");
  
-             string input = Console.ReadLine() ?? "";
+             string input = (Console.ReadLine() ?? "").Trim();
              Console.WriteLine("-------------------------------\n");
              switch(input.ToLower()){
                  case "continue":
                      Console.WriteLine("Enter one word at a time without whitespaces\n");
-                     string suggest = Console.ReadLine() ?? "";
+                     string suggest = (Console.ReadLine() ?? "").Trim();
                      if (hasNonLetter(suggest)){
                          Console.WriteLine("The input contains non-alphabet character.\n");
                          Console.WriteLine("Try again.\n");

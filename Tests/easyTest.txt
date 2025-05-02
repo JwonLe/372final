@@ -1,0 +1,13 @@
+start
+easy
+n
+a
+e
+i
+o
+u
+hint
+s
+t
+r
+n

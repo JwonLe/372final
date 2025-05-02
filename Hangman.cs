@@ -18,10 +18,14 @@ public class Hangman{
 
         // To test, enter dotnet run -- test
         if (args.Contains("test")) {
-        Test.RunAllTests();
-        return;
+            Test.RunAllTests();
+            return;
         }
 
+        run();
+    }
+
+    public static void run(){
         Console.WriteLine("*************HANG MAN*************\n");
             while(true){
                 
@@ -54,7 +58,7 @@ public class Hangman{
                 Console.WriteLine("IF YOU WANT TO SUGGEST WORDS: SUGGEST\n");
                 Console.WriteLine("IF YOU WANT TO EXIT: EXIT");
                 Console.WriteLine("************************************");
-                string input = Console.ReadLine() ?? "";
+                string input = (Console.ReadLine() ?? "").Trim();
 
             
                 switch(input.ToLower()){
@@ -67,24 +71,29 @@ public class Hangman{
 
                             score = Game.playGame(mode.ToLower(), score);
 
+                            bool invalidCommand = true;
 
-                            Console.WriteLine("\nDo you want to play one more game?\n");
-                            Console.WriteLine("Enter y/n\n");
-                            string newGame = Console.ReadLine() ?? "";
+                            while(invalidCommand){
+                                Console.WriteLine("\nDo you want to play one more game?\n");
+                                Console.WriteLine("Enter y/n\n");
+                                string newGame = (Console.ReadLine() ?? "").Trim();
 
-                            switch(newGame.ToLower()){
-                                case "y":
-                                    break;
+                                switch(newGame.ToLower()){
+                                    case "y":
+                                        invalidCommand = false;
+                                        break;
 
-                                case "n":
-                                    Console.WriteLine("\nGood bye!\n");
-                                    keepPlaying = false;
-                                    return;
-                                
-                                default:
-                                    Console.WriteLine("\nWrong Option. Enter again\n");
-                                    break;
+                                    case "n":
+                                        Console.WriteLine("\nGood bye!\n");
+                                        keepPlaying = false;
+                                        invalidCommand = false;
+                                        return;
+                                    
+                                    default:
+                                        Console.WriteLine("\nWrong Option. Enter again\n");
+                                        break;
 
+                                }
                             }
                         }
                         break;
@@ -114,7 +123,7 @@ public class Hangman{
         while (true){
             Console.WriteLine("\n*************Choose Mode*************");
             Console.WriteLine("Enter: Easy / Intermediate / Hard / Multiplayer");
-            string mode = Console.ReadLine() ?? "";
+            string mode = (Console.ReadLine() ?? "").Trim();
             switch (mode.ToLower()){
                 case "easy":
                     return "easy";
